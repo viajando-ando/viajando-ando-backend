@@ -15,7 +15,7 @@ class Network {
   }
 
   get(req: Request, res: Response) {
-    Controller.upsert()
+    Controller.list()
       .then((travel) => {
         networkResponse.success(req, res, travel, res.statusCode);
       })
