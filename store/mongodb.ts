@@ -23,7 +23,6 @@ class MongoDB {
       const travels = TravelModel.find();
       return travels;
     }
-
     return null;
   }
 }

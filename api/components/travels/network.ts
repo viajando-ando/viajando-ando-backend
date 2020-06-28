@@ -8,7 +8,18 @@ class Network {
   }
 
   config(): void {
+    this.router.get('/', this.get);
     this.router.post('/', this.upsert);
+  }
+
+  get(req: Request, res: Response) {
+    Controller.upsert()
+      .then((travel) => {
+        res.json(travel);
+      })
+      .catch((error) => {
+        res.json({ error: error.message });
+      });
   }
 
   upsert(req: Request, res: Response) {

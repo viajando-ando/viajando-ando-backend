@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export interface Travel extends mongoose.Document {
+interface Travel extends mongoose.Document {
   _id: mongoose.Schema.Types.ObjectId;
   start: {
     date: {
@@ -51,3 +51,5 @@ export interface Travel extends mongoose.Document {
     coordinates: number[];
   };
 }
+
+export default Travel;
