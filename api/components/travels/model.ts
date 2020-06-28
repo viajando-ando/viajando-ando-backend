@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
-import { Travel } from './interface';
+import Travel from './interface';
 
 const TravelSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
