@@ -1,6 +1,7 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
 
-module.exports = {
+dotenv.config();
+export default {
   database: {
     user: process.env.DATABASE_USER,
     pass: process.env.DATABASE_PASS,
@@ -8,3 +9,5 @@ module.exports = {
     name: process.env.DATABASE_NAME,
   },
 };
+
+// export const database
