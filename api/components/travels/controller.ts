@@ -17,6 +17,10 @@ class Controller {
     const typeExam = await this.store.list('travels');
     return typeExam;
   }
+
+  //   async loadData(file) {
+  //     let fileUrl = '';
+  //   }
 }
 
 export default Controller;
