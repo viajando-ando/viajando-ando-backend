@@ -1,8 +1,10 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, response } from 'express';
 import Controller from './index';
+import networkResponse from '../../../network/dataResponse';
 
 class Network {
   public router: Router = Router();
+
   constructor() {
     this.config();
   }
@@ -15,20 +17,22 @@ class Network {
   get(req: Request, res: Response) {
     Controller.upsert()
       .then((travel) => {
-        res.json(travel);
+        networkResponse.success(req, res, travel, res.statusCode);
       })
       .catch((error) => {
-        res.json({ error: error.message });
+        console.error(error.message);
+        networkResponse.error(req, res);
       });
   }
 
   upsert(req: Request, res: Response) {
     Controller.upsert()
       .then((travel) => {
-        res.json(travel);
+        networkResponse.success(req, res, travel, res.statusCode);
       })
       .catch((error) => {
-        res.json({ error: error.message });
+        console.error(error.message);
+        networkResponse.error(req, res);
       });
   }
 }

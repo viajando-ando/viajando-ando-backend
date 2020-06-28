@@ -15,7 +15,7 @@ class MongoDB {
         },
       )
       .then((db) => console.log('DB Connected'))
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }
 
   async list(table: String) {
