@@ -9,7 +9,7 @@ const TravelSchema = new Schema({
     },
     pickup_address: String,
     pickup_location: {
-      pl_type: String,
+      tr_type: String,
       coordinates: [Number],
     },
   },
@@ -17,7 +17,7 @@ const TravelSchema = new Schema({
     date: String,
     pickup_address: String,
     pickup_location: {
-      pl_type: String,
+      tr_type: String,
       coordinates: [Number],
     },
   },
@@ -48,7 +48,7 @@ const TravelSchema = new Schema({
   },
   price: Number,
   driver_location: {
-    dl_type: String,
+    tr_type: String,
     coordinates: [Number],
   },
 });

@@ -8,7 +8,7 @@ interface Travel {
     };
     pickup_address: string;
     pickup_location: {
-      pl_type: string;
+      tr_type: string;
       coordinates: number[];
     };
   };
@@ -16,7 +16,7 @@ interface Travel {
     date: string;
     pickup_address: string;
     pickup_location: {
-      pl_type: string;
+      tr_type: string;
       coordinates: number[];
     };
   };
@@ -47,7 +47,7 @@ interface Travel {
   };
   price: number;
   driver_location: {
-    dl_type: string;
+    tr_type: string;
     coordinates: number[];
   };
 }
