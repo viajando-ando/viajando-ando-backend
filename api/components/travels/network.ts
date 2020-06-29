@@ -2,10 +2,12 @@ import { Router, Request, Response } from 'express';
 import Controller from './index';
 import networkResponse from '../../../network/dataResponse';
 import multer from 'multer';
+import fs from 'fs';
+import TravelInterface from './travelInterface';
 
 // const uploaded = multer().single('file');
 
-const DIR = './data/';
+const DIR = __dirname + '/data/';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -50,7 +52,7 @@ class Network {
     if (req.body._id) {
       // update travel
     } else {
-      Controller.upsert(req.body)
+      Controller.upsert(req.body, false)
         .then((info) => {
           console.log(info);
           return networkResponse.success(
@@ -78,6 +80,28 @@ class Network {
       }
 
       if (req.file.mimetype == 'application/json') {
+        fs.readFile(__dirname + '/data/data.json', (err, data) => {
+          if (err) {
+            console.log(err);
+          }
+          let stringData = data.toString();
+          stringData = stringData.replace(/\$date|type/gi, (element) => {
+            if (element === 'type') {
+              return 'tr_type';
+            }
+            return 'date';
+          });
+          const jsonData = JSON.parse(stringData);
+          jsonData.trips.map((travel: any) => {
+            req.body = travel;
+            Controller.upsert(req.body, true).catch((info) => {
+              console.error(info.message);
+              return networkResponse.error(req, res);
+            });
+            // console.log('casa', jsonData);
+          });
+        });
+
         networkResponse.success(req, res, 'file uploaded', res.statusCode);
       } else {
         console.error('Only file type json');

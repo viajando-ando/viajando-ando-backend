@@ -7,7 +7,7 @@ interface Travel extends mongoose.Document {
     };
     pickup_address: string;
     pickup_location: {
-      pl_type: string;
+      tr_type: string;
       coordinates: number[];
     };
   };
@@ -15,7 +15,7 @@ interface Travel extends mongoose.Document {
     date: string;
     pickup_address: string;
     pickup_location: {
-      pl_type: string;
+      tr_type: string;
       coordinates: number[];
     };
   };
@@ -46,7 +46,7 @@ interface Travel extends mongoose.Document {
   };
   price: number;
   driver_location: {
-    dl_type: string;
+    tr_type: string;
     coordinates: number[];
   };
 }

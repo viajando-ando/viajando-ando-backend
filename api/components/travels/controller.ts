@@ -15,66 +15,70 @@ class Controller {
     return travels;
   }
 
-  async upsert(body: any) {
+  async upsert(body: any, isBulk: boolean) {
     let date = new Date().toISOString();
     let newObj;
 
-    this.travel = {
-      start: {
-        date: {
+    if (!isBulk) {
+      this.travel = {
+        start: {
+          date: {
+            date: date,
+          },
+          pickup_address: body.start.pickup_address,
+          pickup_location: {
+            tr_type: body.start.pickup_location.type,
+            coordinates: [
+              body.start.pickup_location.lat,
+              body.start.pickup_location.long,
+            ],
+          },
+        },
+        end: {
+          date: '',
+          pickup_address: body.end.pickup_address,
+          pickup_location: {
+            tr_type: body.end.pickup_location.type,
+            coordinates: [
+              body.end.pickup_location.lat,
+              body.end.pickup_location.long,
+            ],
+          },
+        },
+        country: {
+          name: body.country,
+        },
+        city: {
+          name: body.city,
+        },
+        passenger: {
+          first_name: body.passenger.first_name,
+          last_name: body.passenger.last_name,
+        },
+        driver: {
+          first_name: body.driver.first_name,
+          last_name: body.driver.last_name,
+        },
+        car: {
+          plate: body.car.plate,
+        },
+        status: body.status,
+        check_code: body.code,
+        createdAt: {
           date: date,
         },
-        pickup_address: body.start.pickup_address,
-        pickup_location: {
-          pl_type: body.start.pickup_location.type,
-          coordinates: [
-            body.start.pickup_location.lat,
-            body.start.pickup_location.long,
-          ],
+        updatedAt: {
+          date: date,
         },
-      },
-      end: {
-        date: '',
-        pickup_address: body.end.pickup_address,
-        pickup_location: {
-          pl_type: body.end.pickup_location.type,
-          coordinates: [
-            body.end.pickup_location.lat,
-            body.end.pickup_location.long,
-          ],
+        price: body.price,
+        driver_location: {
+          tr_type: body.driver_location.type,
+          coordinates: [body.driver_location.lat, body.driver_location.long],
         },
-      },
-      country: {
-        name: body.country,
-      },
-      city: {
-        name: body.city,
-      },
-      passenger: {
-        first_name: body.passenger.first_name,
-        last_name: body.passenger.last_name,
-      },
-      driver: {
-        first_name: body.driver.first_name,
-        last_name: body.driver.last_name,
-      },
-      car: {
-        plate: body.car.plate,
-      },
-      status: body.status,
-      check_code: body.code,
-      createdAt: {
-        date: date,
-      },
-      updatedAt: {
-        date: date,
-      },
-      price: body.price,
-      driver_location: {
-        dl_type: body.driver_location.type,
-        coordinates: [body.driver_location.lat, body.driver_location.long],
-      },
-    };
+      };
+    } else {
+      this.travel = body;
+    }
 
     if (body._id) {
       this.travel._id = body._id;
