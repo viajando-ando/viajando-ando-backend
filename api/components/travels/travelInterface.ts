@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-interface Travel extends mongoose.Document {
+interface Travel {
+  _id?: mongoose.Schema.Types.ObjectId;
   start: {
     date: {
       date: string;
