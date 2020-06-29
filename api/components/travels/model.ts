@@ -5,11 +5,11 @@ const TravelSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
   start: {
     date: {
-      $date: String,
+      date: String,
     },
     pickup_address: String,
     pickup_location: {
-      type: String,
+      pl_type: String,
       coordinates: [Number],
     },
   },
@@ -17,7 +17,7 @@ const TravelSchema = new Schema({
     date: String,
     pickup_address: String,
     pickup_location: {
-      type: String,
+      pl_type: String,
       coordinates: [Number],
     },
   },
@@ -41,14 +41,14 @@ const TravelSchema = new Schema({
   status: String,
   check_code: String,
   createdAt: {
-    $date: String,
+    date: String,
   },
   updatedAt: {
-    $date: String,
+    date: String,
   },
   price: Number,
   driver_location: {
-    type: String,
+    dl_type: String,
     coordinates: [Number],
   },
 });

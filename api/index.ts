@@ -11,5 +11,5 @@ app.use('/api/travels', travels);
 app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'), () => {
-  console.log('corriendo en ', app.get('port'));
+  console.info('Server running ', app.get('port'));
 });

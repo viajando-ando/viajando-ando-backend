@@ -47,14 +47,24 @@ class Network {
   }
 
   upsert(req: Request, res: Response) {
-    Controller.upsert()
-      .then((travel) => {
-        networkResponse.success(req, res, travel, res.statusCode);
-      })
-      .catch((error) => {
-        console.error(error.message);
-        networkResponse.error(req, res);
-      });
+    if (req.body._id) {
+      // update travel
+    } else {
+      Controller.upsert(req.body)
+        .then((info) => {
+          console.log(info);
+          return networkResponse.success(
+            req,
+            res,
+            'Successful registration',
+            201,
+          );
+        })
+        .catch((info) => {
+          console.error(info.message);
+          return networkResponse.error(req, res);
+        });
+    }
   }
 
   upload(req: Request, res: Response) {

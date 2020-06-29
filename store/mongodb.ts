@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import config from '../config';
 import TravelModel from '../api/components/travels/model';
+import TravelInterface from '../api/components/travels/travelInterface';
 
 class MongoDB {
   constructor() {
@@ -14,7 +15,7 @@ class MongoDB {
           useUnifiedTopology: true,
         },
       )
-      .then((db) => console.log('DB Connected'))
+      .then((db) => console.info('DB Connected'))
       .catch((err) => console.error(err));
   }
 
@@ -24,6 +25,13 @@ class MongoDB {
       return travels;
     }
     return null;
+  }
+
+  async upsert(collection: String, travel: TravelInterface) {
+    if (collection === 'travels') {
+      const travelResponse = new TravelModel(travel);
+      return travelResponse.save();
+    }
   }
 }
 
