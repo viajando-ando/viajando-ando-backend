@@ -29,12 +29,12 @@ class Network {
   }
 
   config(): void {
-    this.router.get('/:page?', this.getPages);
     this.router.get('/count', this.countTravels);
     this.router.get('/count-cities', this.countCities);
     this.router.post('/', this.upsert);
     this.router.patch('/', this.upsert);
     this.router.post('/upload', this.upload);
+    this.router.get('/:page?', this.getPages);
   }
 
   get(req: Request, res: Response) {
