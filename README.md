@@ -31,6 +31,14 @@ The project use NodeJS with Typescript to write legible code. This backen was de
 
 #### `npm run build`
 
+- **Build Docker image**
+
+#### `docker build -t name_version:tag .`
+
+#### `docker tag name_version:tag gcr.io/id_project_gcp/name_version_to_gcp:tag`
+
+#### `docker push gcr.io/id_project_gcp/name_version_to_gcp:tag`
+
 ## Follow me [dflores.dev](https://dflores.dev)
 
 ### Anywhere @dfloresdev
