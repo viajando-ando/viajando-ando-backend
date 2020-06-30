@@ -28,6 +28,28 @@ class MongoDB {
     return null;
   }
 
+  async listPages(pageData: number) {
+    let perPage = 10;
+    let page = pageData;
+    return new Promise((resolve, reject) => {
+      TravelModel.find({})
+        .skip(perPage * page - perPage)
+        .limit(perPage)
+        .exec((err, travels) => {
+          TravelModel.count((err: any, count: number) => {
+            if (err) {
+              reject(err);
+            }
+            resolve({
+              current: page,
+              pages: Math.ceil(count / perPage),
+              travels,
+            });
+          });
+        });
+    });
+  }
+
   async upsert(collection: String, travel: TravelInterface, isNew: boolean) {
     if (collection === 'travels') {
       if (isNew) {

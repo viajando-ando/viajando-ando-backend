@@ -29,7 +29,7 @@ class Network {
   }
 
   config(): void {
-    this.router.get('/', this.get);
+    this.router.get('/:page?', this.getPages);
     this.router.get('/count', this.countTravels);
     this.router.get('/count-cities', this.countCities);
     this.router.post('/', this.upsert);
@@ -39,6 +39,18 @@ class Network {
 
   get(req: Request, res: Response) {
     Controller.list()
+      .then((travel) => {
+        networkResponse.success(req, res, travel, res.statusCode);
+      })
+      .catch((error) => {
+        console.error(error.message);
+        networkResponse.error(req, res);
+      });
+  }
+
+  getPages(req: Request, res: Response) {
+    let page = req.params.page ? parseInt(req.params.page) : 1;
+    Controller.listPagination(page)
       .then((travel) => {
         networkResponse.success(req, res, travel, res.statusCode);
       })
