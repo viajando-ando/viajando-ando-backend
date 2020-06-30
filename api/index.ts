@@ -1,11 +1,13 @@
 import express from 'express';
 import travels from './components/travels/network';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 
 import * as swaggerDocument from './swagger.json';
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/api/travels', travels);
