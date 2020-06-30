@@ -1,8 +1,7 @@
 import mongoose, { Schema, model } from 'mongoose';
 import Travel from './interface';
 
-const TravelSchema = new Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+const TravelSchema: Schema = new Schema({
   start: {
     date: {
       date: String,
