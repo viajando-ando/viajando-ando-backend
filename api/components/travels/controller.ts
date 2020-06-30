@@ -15,6 +15,11 @@ class Controller {
     return travels;
   }
 
+  async listPagination(page: number) {
+    const travels = await this.store.listPages(page);
+    return travels;
+  }
+
   async count() {
     const countTravels = await this.store.count();
     return countTravels;
