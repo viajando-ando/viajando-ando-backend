@@ -29,21 +29,43 @@ class MongoDB {
   }
 
   async listPages(pageData: number) {
+    // let result = TravelModel.collection.count();
+    // return result;
+    // console.log('joven');
     let perPage = 10;
     let page = pageData;
     return new Promise((resolve, reject) => {
-      TravelModel.find({})
-        .skip(perPage * page - perPage)
+      // TravelModel.find({})
+      //   .skip(perPage * page - perPage)
+      //   .limit(perPage)
+      //   .exec((err, travels) => {
+      //     TravelModel.count((err: any, count: number) => {
+      //       if (err) {
+      //         return err;
+      //       }
+      //       return {
+      //         current: page,
+      //         pages: Math.ceil(count / perPage),
+      //         travels,
+      //       };
+      //     });
+      //   });
+      var perPage = 10,
+        page = Math.max(0, pageData);
+
+      TravelModel.find()
+        // .select('name')
         .limit(perPage)
-        .exec((err, travels) => {
+        .skip(perPage * page)
+        .sort({
+          name: 'asc',
+        })
+        .exec(function (err, travels) {
           TravelModel.count((err: any, count: number) => {
-            if (err) {
-              reject(err);
-            }
             resolve({
-              current: page,
-              pages: Math.ceil(count / perPage),
-              travels,
+              travels: travels,
+              page: page,
+              pages: Math.floor(count / perPage),
             });
           });
         });
