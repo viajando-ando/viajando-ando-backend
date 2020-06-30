@@ -30,6 +30,7 @@ class Network {
 
   config(): void {
     this.router.get('/', this.get);
+    this.router.get('/count', this.countTravels);
     this.router.post('/', this.upsert);
     this.router.patch('/', this.upsert);
     this.router.post('/upload', this.upload);
@@ -37,6 +38,17 @@ class Network {
 
   get(req: Request, res: Response) {
     Controller.list()
+      .then((travel) => {
+        networkResponse.success(req, res, travel, res.statusCode);
+      })
+      .catch((error) => {
+        console.error(error.message);
+        networkResponse.error(req, res);
+      });
+  }
+
+  countTravels(req: Request, res: Response) {
+    Controller.count()
       .then((travel) => {
         networkResponse.success(req, res, travel, res.statusCode);
       })
