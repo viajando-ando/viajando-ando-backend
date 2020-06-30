@@ -9,5 +9,3 @@ export default {
     name: process.env.DATABASE_NAME,
   },
 };
-
-// export const database
