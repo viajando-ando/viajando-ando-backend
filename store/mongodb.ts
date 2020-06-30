@@ -29,27 +29,9 @@ class MongoDB {
   }
 
   async listPages(pageData: number) {
-    // let result = TravelModel.collection.count();
-    // return result;
-    // console.log('joven');
     let perPage = 10;
     let page = pageData;
     return new Promise((resolve, reject) => {
-      // TravelModel.find({})
-      //   .skip(perPage * page - perPage)
-      //   .limit(perPage)
-      //   .exec((err, travels) => {
-      //     TravelModel.count((err: any, count: number) => {
-      //       if (err) {
-      //         return err;
-      //       }
-      //       return {
-      //         current: page,
-      //         pages: Math.ceil(count / perPage),
-      //         travels,
-      //       };
-      //     });
-      //   });
       var perPage = 10,
         page = Math.max(0, pageData);
 
@@ -106,7 +88,7 @@ class MongoDB {
       {
         $group: {
           _id: {
-            name: '$country.name',
+            name: '$city.name',
           },
           count: {
             $sum: 1,
