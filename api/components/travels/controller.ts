@@ -15,6 +15,11 @@ class Controller {
     return travels;
   }
 
+  async count() {
+    const countTravels = await this.store.count();
+    return countTravels;
+  }
+
   async upsert(body: any, isBulk: boolean) {
     let date = new Date().toISOString();
     let newObj;

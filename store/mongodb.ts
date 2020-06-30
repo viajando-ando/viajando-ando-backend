@@ -51,6 +51,11 @@ class MongoDB {
       }
     }
   }
+
+  async count() {
+    let result = TravelModel.collection.count();
+    return result;
+  }
 }
 
 const store = new MongoDB();
