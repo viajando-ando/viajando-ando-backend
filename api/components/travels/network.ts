@@ -5,8 +5,6 @@ import multer from 'multer';
 import fs from 'fs';
 import TravelInterface from './travelInterface';
 
-// const uploaded = multer().single('file');
-
 const DIR = __dirname + '/data/';
 
 const storage = multer.diskStorage({
@@ -33,7 +31,7 @@ class Network {
   config(): void {
     this.router.get('/', this.get);
     this.router.post('/', this.upsert);
-    // this.router.post('/upload', this.uploadFile.single('file'), this.upload);
+    this.router.patch('/', this.upsert);
     this.router.post('/upload', this.upload);
   }
 
@@ -49,24 +47,22 @@ class Network {
   }
 
   upsert(req: Request, res: Response) {
+    let message = '';
+
     if (req.body._id) {
-      // update travel
+      message = 'Update successfully';
     } else {
-      Controller.upsert(req.body, false)
-        .then((info) => {
-          console.log(info);
-          return networkResponse.success(
-            req,
-            res,
-            'Successful registration',
-            201,
-          );
-        })
-        .catch((info) => {
-          console.error(info.message);
-          return networkResponse.error(req, res);
-        });
+      message = 'Successful registration';
     }
+
+    Controller.upsert(req.body, false)
+      .then((info) => {
+        return networkResponse.success(req, res, message, 201);
+      })
+      .catch((info) => {
+        console.error(info.message);
+        return networkResponse.error(req, res);
+      });
   }
 
   upload(req: Request, res: Response) {
@@ -82,7 +78,7 @@ class Network {
       if (req.file.mimetype == 'application/json') {
         fs.readFile(__dirname + '/data/data.json', (err, data) => {
           if (err) {
-            console.log(err);
+            console.error(err);
           }
           let stringData = data.toString();
           stringData = stringData.replace(/\$date|type/gi, (element) => {
@@ -98,7 +94,6 @@ class Network {
               console.error(info.message);
               return networkResponse.error(req, res);
             });
-            // console.log('casa', jsonData);
           });
         });
 

@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import config from '../config';
 import TravelModel from '../api/components/travels/model';
 import TravelInterface from '../api/components/travels/travelInterface';
+import mongodb from 'mongodb';
 
 class MongoDB {
   constructor() {
@@ -27,10 +28,27 @@ class MongoDB {
     return null;
   }
 
-  async upsert(collection: String, travel: TravelInterface) {
+  async upsert(collection: String, travel: TravelInterface, isNew: boolean) {
     if (collection === 'travels') {
-      const travelResponse = new TravelModel(travel);
-      return travelResponse.save();
+      if (isNew) {
+        const travelResponse = new TravelModel(travel);
+        return travelResponse.save();
+      }
+
+      const travelElement = TravelModel.findOne({ _id: travel._id });
+
+      if (travelElement) {
+        travelElement.update(travel, (err) => {
+          if (err) {
+            console.error(err);
+            return err;
+          } else {
+            return true;
+          }
+        });
+      } else {
+        return 'Item not found';
+      }
     }
   }
 }

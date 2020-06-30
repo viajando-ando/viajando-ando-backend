@@ -18,8 +18,9 @@ class Controller {
   async upsert(body: any, isBulk: boolean) {
     let date = new Date().toISOString();
     let newObj;
+    let isNew = false;
 
-    if (!isBulk) {
+    if (!isBulk && !body._id) {
       this.travel = {
         start: {
           date: {
@@ -81,16 +82,14 @@ class Controller {
     }
 
     if (body._id) {
-      this.travel._id = body._id;
+      this.travel.updatedAt.date = date;
+      newObj = this.travel;
     } else {
+      isNew = true;
       newObj = { _id: new ObjectId(), ...this.travel };
     }
-    return this.store.upsert(COLLECTION, newObj);
+    return this.store.upsert(COLLECTION, newObj, isNew);
   }
-
-  //   async loadData(file) {
-  //     let fileUrl = '';
-  //   }
 }
 
 export default Controller;
