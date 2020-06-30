@@ -56,6 +56,22 @@ class MongoDB {
     let result = TravelModel.collection.count();
     return result;
   }
+
+  async countCities() {
+    let result = TravelModel.aggregate([
+      {
+        $group: {
+          _id: {
+            name: '$country.name',
+          },
+          count: {
+            $sum: 1,
+          },
+        },
+      },
+    ]);
+    return result;
+  }
 }
 
 const store = new MongoDB();

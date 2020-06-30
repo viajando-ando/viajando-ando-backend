@@ -31,6 +31,7 @@ class Network {
   config(): void {
     this.router.get('/', this.get);
     this.router.get('/count', this.countTravels);
+    this.router.get('/count-cities', this.countCities);
     this.router.post('/', this.upsert);
     this.router.patch('/', this.upsert);
     this.router.post('/upload', this.upload);
@@ -49,6 +50,17 @@ class Network {
 
   countTravels(req: Request, res: Response) {
     Controller.count()
+      .then((travel) => {
+        networkResponse.success(req, res, travel, res.statusCode);
+      })
+      .catch((error) => {
+        console.error(error.message);
+        networkResponse.error(req, res);
+      });
+  }
+
+  countCities(req: Request, res: Response) {
+    Controller.countCities()
       .then((travel) => {
         networkResponse.success(req, res, travel, res.statusCode);
       })
